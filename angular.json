@@ -70,10 +70,10 @@
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "configurations": {
                         "production": {
-                            "browserTarget": "code-star:build:production"
+                            "buildTarget": "code-star:build:production"
                         },
                         "development": {
-                            "browserTarget": "code-star:build:development"
+                            "buildTarget": "code-star:build:development"
                         }
                     },
                     "defaultConfiguration": "development"
@@ -121,7 +121,6 @@
             }
         }
     },
-    "defaultProject": "code-star",
     "cli": {
         "defaultCollection": "@angular-eslint/schematics"
     }
