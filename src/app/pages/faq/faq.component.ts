@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, ViewChild, afterRender} from '@angular/core';
 import {IntersectionObserverService} from '../../services/intersection-observer.service';
 import {FlipService} from '../../services/flip.service';
 
@@ -13,7 +13,7 @@ interface Item {
     templateUrl: './faq.component.html',
     styleUrls: ['./faq.component.scss'],
 })
-export class FaqComponent implements AfterViewInit {
+export class FaqComponent {
     private readonly ANIMATION_DURATION: number = 500;
 
     @ViewChild('section') private section!: ElementRef<HTMLElement>;
@@ -62,14 +62,17 @@ export class FaqComponent implements AfterViewInit {
     private isPlaying: boolean = false;
 
     public constructor(
-        private intersectionObserverService: IntersectionObserverService,
-        private flipService: FlipService,
+        intersectionObserverService: IntersectionObserverService,
         private changeDetectorRef: ChangeDetectorRef
-    ) {}
+    ) {
+        afterRender(() => {
+            const options: IntersectionObserverInit = {rootMargin: '-120px 0px'};
+            intersectionObserverService.initObserver(this.section.nativeElement, 'header, h3', options);
+        })
+    }
 
     public ngAfterViewInit(): void {
-        const options: IntersectionObserverInit = {rootMargin: '-120px 0px'};
-        this.intersectionObserverService.initObserver(this.section.nativeElement, 'header, h3', options);
+        
     }
 
     public async questionClickHandler(index: number): Promise<void> {

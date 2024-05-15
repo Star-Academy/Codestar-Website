@@ -1,11 +1,11 @@
-import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, ElementRef, ViewChild, afterRender} from '@angular/core';
 
 @Component({
     selector: 'app-requirements',
     templateUrl: './requirements.component.html',
     styleUrls: ['./requirements.component.scss'],
 })
-export class RequirementsComponent implements AfterViewInit {
+export class RequirementsComponent {
     private readonly MINIMUM_DELAY: number = 0;
     private readonly MAXIMUM_DELAY: number = 1000;
 
@@ -14,8 +14,10 @@ export class RequirementsComponent implements AfterViewInit {
 
     private observer!: IntersectionObserver;
 
-    public ngAfterViewInit(): void {
-        this.initObserver();
+    public constructor(){
+        afterRender(()=>{
+            this.initObserver();
+        })
     }
 
     private initObserver(): void {

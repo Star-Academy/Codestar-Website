@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, ElementRef, ViewChild, afterRender} from '@angular/core';
 import {IntersectionObserverService} from '../../services/intersection-observer.service';
 
 interface Item {
@@ -13,7 +13,7 @@ interface Item {
     templateUrl: './timeline.component.html',
     styleUrls: ['./timeline.component.scss'],
 })
-export class TimelineComponent implements AfterViewInit {
+export class TimelineComponent {
     @ViewChild('section') private section!: ElementRef<HTMLElement>;
 
     public items: Item[] = [
@@ -146,10 +146,10 @@ export class TimelineComponent implements AfterViewInit {
         },
     ];
 
-    public constructor(private service: IntersectionObserverService) {}
-
-    public ngAfterViewInit(): void {
-        const options: IntersectionObserverInit = {rootMargin: '-120px 0px'};
-        this.service.initObserver(this.section.nativeElement, 'header, li', options);
+    public constructor(service: IntersectionObserverService) {
+        afterRender(()=>{
+            const options: IntersectionObserverInit = {rootMargin: '-120px 0px'};
+            service.initObserver(this.section.nativeElement, 'header, li', options);
+        })
     }
 }
