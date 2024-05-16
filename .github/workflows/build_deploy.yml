@@ -28,7 +28,7 @@ jobs:
               uses: actions/upload-artifact@v1
               with:
                   name: deploy_dist
-                  path: dist\code-star\browser
+                  path: build
     deploy:
         name: Deploy
         runs-on: ubuntu-latest
