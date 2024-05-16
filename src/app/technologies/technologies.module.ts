@@ -16,6 +16,14 @@ import {PostgresqlComponent} from './postgresql/postgresql.component';
 import {SassComponent} from './sass/sass.component';
 import {UiUxComponent} from './ui-ux/ui-ux.component';
 import {XunitComponent} from './xunit/xunit.component';
+import {LinuxComponent} from './linux/linux.component';
+import {AnsibleComponent} from './ansible/ansible.component';
+import {DockerComponent} from './docker/docker.component';
+import {GitHubActionsComponent} from './gh-actions/gh-actions.component';
+import {GoComponent} from './go/go.component';
+import {NetworkComponent} from './network/network.component';
+import {NginxComponent} from './nginx/nginx.component';
+import {OtelComponent} from './otel/otel.component';
 
 @NgModule({
     declarations: [
@@ -34,6 +42,14 @@ import {XunitComponent} from './xunit/xunit.component';
         SassComponent,
         UiUxComponent,
         XunitComponent,
+        LinuxComponent,
+        AnsibleComponent,
+        DockerComponent,
+        GitHubActionsComponent,
+        GoComponent,
+        NetworkComponent,
+        NginxComponent,
+        OtelComponent,
     ],
     imports: [CommonModule],
     exports: [
@@ -52,6 +68,14 @@ import {XunitComponent} from './xunit/xunit.component';
         SassComponent,
         UiUxComponent,
         XunitComponent,
+        LinuxComponent,
+        AnsibleComponent,
+        DockerComponent,
+        GitHubActionsComponent,
+        GoComponent,
+        NetworkComponent,
+        NginxComponent,
+        OtelComponent,
     ],
 })
 export class TechnologiesModule {}

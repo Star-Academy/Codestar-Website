@@ -11,13 +11,13 @@ export class RequirementsComponent {
 
     @ViewChild('frontendSection') private frontendSection!: ElementRef<HTMLElement>;
     @ViewChild('softwareSection') private softwareSection!: ElementRef<HTMLElement>;
-
+    @ViewChild('DevOpsSection') private DevOpsSection!: ElementRef<HTMLElement>;
     private observer!: IntersectionObserver;
 
-    public constructor(){
-        afterRender(()=>{
+    public constructor() {
+        afterRender(() => {
             this.initObserver();
-        })
+        });
     }
 
     private initObserver(): void {
@@ -41,6 +41,7 @@ export class RequirementsComponent {
 
         this.observeElements(this.frontendSection.nativeElement);
         this.observeElements(this.softwareSection.nativeElement);
+        this.observeElements(this.DevOpsSection.nativeElement);
     }
 
     private observeElements(section: HTMLElement): void {

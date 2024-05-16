@@ -9,12 +9,14 @@ import {IntersectionObserverService} from '../../services/intersection-observer.
 export class ContentComponent {
     @ViewChild('frontendSection') private frontendSection!: ElementRef<HTMLElement>;
     @ViewChild('softwareSection') private softwareSection!: ElementRef<HTMLElement>;
+    @ViewChild('DevOpsSection') private DevOpsSection!: ElementRef<HTMLElement>;
 
     public constructor(service: IntersectionObserverService) {
         afterRender(() => {
             const options: IntersectionObserverInit = {rootMargin: '-120px 0px'};
             service.initObserver(this.frontendSection.nativeElement, 'header, .icon, h3, p', options);
             service.initObserver(this.softwareSection.nativeElement, 'header, .icon, h3, p', options);
+            service.initObserver(this.DevOpsSection.nativeElement, 'header, .icon, h3, p', options);
         })
     }
 }

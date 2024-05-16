@@ -12,6 +12,6 @@ export class HeroComponent{
     public constructor(service: IntersectionObserverService) {
         afterRender(() =>{
             service.initObserver(this.section.nativeElement, '.watermark, .line, p, .button');
-        })
+        });
     }
 }
