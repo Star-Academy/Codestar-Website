@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, ViewChild, afterRender} from '@angular/core';
 import {IntersectionObserverService} from '../../services/intersection-observer.service';
 import {FlipService} from '../../services/flip.service';
 
@@ -13,7 +13,7 @@ interface Item {
     templateUrl: './faq.component.html',
     styleUrls: ['./faq.component.scss'],
 })
-export class FaqComponent implements AfterViewInit {
+export class FaqComponent {
     private readonly ANIMATION_DURATION: number = 500;
 
     @ViewChild('section') private section!: ElementRef<HTMLElement>;
@@ -41,16 +41,16 @@ export class FaqComponent implements AfterViewInit {
         {
             question: 'آیا دوره به صورت حضوری/مجازی برگزار می‌شود؟',
             answer: `
-                دوره به سه صورتِ مجازی، حضوری در تهران و حضوری در اصفهان برگزار می‌شود
+                دوره به دو صورتِ مجازی و حضوری در اصفهان برگزار می‌شود
                 که کارآموزها می‌توانند با توجه به شرایط خود، هر کدام را که صلاح می‌دانند انتخاب کنند.
-                لازم به ذکر است که محتویات و کیفیت کارآموزی برای هر سه نوع کاملاً یکسان است
+                لازم به ذکر است که محتویات و کیفیت کارآموزی برای هر دو نوع کاملاً یکسان است
                 و صرفاً برای راحتی کارآموزها، گزینه‌های مختلفی را ارائه کرده‌ایم.
             `,
         },
         {
             question: 'چه اندازه از وقتم را باید برای دوره صرف کنم؟',
             answer: `
-                کارآموزی به صورت کاملاً فشرده، از تاریخ 25 تیر شروع می‌شود؛
+                کارآموزی به صورت کاملاً فشرده برگزار می‌شود؛
                 با توجه به برنامه‌ریزی ما، انتظار داریم کارآموزان روزهای شنبه تا چهارشنبه
                 و در هر روز به اندازۀ 8 ساعت از وقت خود را صرف دوره کنند.
                 البته اگر کارآموزی سرعت بالاتری نسبت به دیگران داشته باشد،
@@ -62,14 +62,17 @@ export class FaqComponent implements AfterViewInit {
     private isPlaying: boolean = false;
 
     public constructor(
-        private intersectionObserverService: IntersectionObserverService,
-        private flipService: FlipService,
+        intersectionObserverService: IntersectionObserverService,
         private changeDetectorRef: ChangeDetectorRef
-    ) {}
+    ) {
+        afterRender(() => {
+            const options: IntersectionObserverInit = {rootMargin: '-120px 0px'};
+            intersectionObserverService.initObserver(this.section.nativeElement, 'header, h3', options);
+        })
+    }
 
     public ngAfterViewInit(): void {
-        const options: IntersectionObserverInit = {rootMargin: '-120px 0px'};
-        this.intersectionObserverService.initObserver(this.section.nativeElement, 'header, h3', options);
+        
     }
 
     public async questionClickHandler(index: number): Promise<void> {

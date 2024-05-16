@@ -44,6 +44,13 @@
     padding: 0;
 
     -webkit-tap-highlight-color: transparent;
+
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+body::-webkit-scrollbar {
+    display: none;
 }
 
 ::selection {

@@ -1,9 +1,9 @@
-import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, ElementRef, ViewChild, afterRender} from '@angular/core';
 import {IntersectionObserverService} from '../../services/intersection-observer.service';
 
 interface Item {
     title: string;
-    day: number;
+    day: string;
     month: string;
     description: string[];
 }
@@ -13,58 +13,63 @@ interface Item {
     templateUrl: './timeline.component.html',
     styleUrls: ['./timeline.component.scss'],
 })
-export class TimelineComponent implements AfterViewInit {
+export class TimelineComponent {
     @ViewChild('section') private section!: ElementRef<HTMLElement>;
 
     public items: Item[] = [
         {
             title: 'آزمون ورودی دوره فرانت‌اند',
-            day: 22,
-            month: 'اردیبهشت',
+            day: '4',
+            month: 'خرداد',
             description: [
                 `
-                    این مسابقه از ساعت 15 روز 22 اردیبهشت شروع می‌شود و به مدت 5 ساعت ادامه خواهد داشت و در
-                    مجموع شامل 7 سوال است که سطح آن‌ها از آسان به سخت متفاوت خواهد بود.
+                این مسابقه از ساعت ۱۰ روز جمعه ۴ خرداد شروع می‌شود و به مدت ۵ ساعت ادامه خواهد داشت و در مجموع شامل ۵ سوال است که سطح آن‌ها از آسان به سخت متفاوت خواهد بود. برای حل سوالات باید به HTML ،CSS و JavaScript مسلط باشید به طوری که سوال اول و دوم مربوط به JavaScript است و حل ۳ سوال آخر به دانش HTML و CSS نیازمند است.
                 `,
                 `
-                    برای حل سوالات باید به HTML، CSS و JavaScript مسلط باشید به طوری که 4 سوال اول مربوط به HTML
-                    و CSS هستند و 3 سوال آخر مربوط به JavaScript می‌باشند.
+                برای حل سوالات JavaScript نیازی به تسلط بر روی Frameworkهایی مانند React و Angular نیست و صرفا دانش JavaScript پایه کافی می‌باشد.
+                `,
+            ],
+        },
+        {
+            title: 'آزمون ورودی دوره دوآپس',
+            day: '4',
+            month: 'خرداد',
+            description: [
+                `این مسابقه از ساعت ۱۰ روز جمعه ۴ خرداد شروع می‌شود و به مدت ۵ ساعت ادامه خواهد داشت و در مجموع شامل ۵ سوال است که سطح آن‌ها از آسان به سخت متفاوت خواهد بود.
+                `,
+                `
+                برای حل سوالات باید به یک زبان برنامه نویسی از بین C#, Java, Python, JavaScript یا Go و ساخت API و ارسال و دریافت درخواست‌های REST با استفاده از آن مسلط بوده و با اسکریپت نویسی Bash و ابزار Docker آشنا باشید.
                 `,
             ],
         },
         {
             title: 'آزمون ورودی دوره مهندسی نرم‌افزار',
-            day: 23,
-            month: 'اردیبهشت',
+            day: '4',
+            month: 'خرداد',
             description: [
-                `
-                    این مسابقه از ساعت 14 روز 23 اردیبهشت شروع می‌شود و به مدت 6 ساعت ادامه خواهد داشت و در
-                    مجموع شامل 5 سوال است که سطح آن‌ها از آسان به سخت متفاوت خواهد بود به طوری که 3 سوال اول
-                    الگوریتمی هستند و 2 سوال آخر پیاده‌سازی می‌باشند.
+                `این مسابقه از ساعت ۱۶ روز جمعه ۴ خرداد شروع می‌شود و به مدت ۵ ساعت ادامه خواهد داشت و در مجموع شامل ۵ سوال است که سطح آن‌ها از آسان به سخت متفاوت خواهد بود به طوری که ۳ سوال اول الگوریتمی هستند و ۲ سوال آخر پیاده‌سازی می‌باشند. برای حل سوالات الگوریتمی می‌توانید از زبان‌های Python ،Java ،#C و یا ++C استفاده‌کنید؛ اما سوالات پیاده‌سازی را فقط می‌توانید با Java ،#C و یا ++C حل کنید.
                 `,
-                `
-                    برای حل سوالات الگوریتمی می‌توانید از زبان‌های C++، Java و Python استفاده کنید اما سوالات پیاده‌سازی را فقط می‌توانید با Java یا Python حل کنید.
+                `سوالات به گونه‌ای تنظیم شده‌اند که با توجه به دانشی که دارید بتوانید بخشی از نمرۀ سوال را بگیرید. به عنوان مثال اگر نتوانید سوال ۳ را به طور کامل حل کنید، این امکان وجود دارد که بتوانید بخشی از سوال ۴ را حل کنید؛ بنابراین حتما به تمام سوالات مراجعه کنید.
                 `,
             ],
         },
         {
             title: 'شروع مصاحبه',
-            day: 28,
-            month: 'اردیبهشت',
+            day: 'هفته دوم',
+            month: 'خرداد',
             description: [
                 `
                     بعد از اتمام آزمون‌های ورودی، برای هماهنگی تاریخ و ساعت مصاحبه با نفرات برتر تماس گرفته می‌شود.
                 `,
                 `
-                    از 28 اردیبهشت، مصاحبۀ هر دو دوره شروع می‌شود که هر مصاحبه از دو قسمت گروهی و انفرادی تشکیل می‌شود
-                    به طوری که در قسمت گروهی، مهارت نرم متقاضیان و در قسمت انفرادی مهارت سخت آن‌ها محک زده می‌شود.
+                    هر مصاحبه از دو قسمت مهارت‌های نرم و فنی تشکیل می‌شود.
                 `,
             ],
         },
         {
             title: 'اعلام نتایج نهایی',
-            day: 7,
-            month: 'خرداد',
+            day: 'اواخر',
+            month: 'تیر',
             description: [
                 `
                     بعد از اتمام مصاحبه، به تمام متقاضیانی که به مصاحبه دعوت شده بودند،
@@ -75,8 +80,8 @@ export class TimelineComponent implements AfterViewInit {
         },
         {
             title: 'مرحله اول کارآموزی',
-            day: 25,
-            month: 'تیر',
+            day: 'هفته اول',
+            month: 'مرداد',
             description: [
                 `
                     هدف از این مرحله، آشنایی منتورها و کارآموزها با یکدیگر است.
@@ -98,7 +103,7 @@ export class TimelineComponent implements AfterViewInit {
         },
         {
             title: 'مرحله دوم کارآموزی',
-            day: 8,
+            day: 'هفته دوم',
             month: 'مرداد',
             description: [
                 `
@@ -114,7 +119,7 @@ export class TimelineComponent implements AfterViewInit {
         },
         {
             title: 'مرحله سوم کارآموزی',
-            day: 22,
+            day: 'هفته سوم',
             month: 'مرداد',
             description: [
                 `
@@ -131,7 +136,7 @@ export class TimelineComponent implements AfterViewInit {
         },
         {
             title: 'پایان کارآموزی',
-            day: 11,
+            day: 'هفته دوم',
             month: 'شهریور',
             description: [
                 `
@@ -146,10 +151,10 @@ export class TimelineComponent implements AfterViewInit {
         },
     ];
 
-    public constructor(private service: IntersectionObserverService) {}
-
-    public ngAfterViewInit(): void {
-        const options: IntersectionObserverInit = {rootMargin: '-120px 0px'};
-        this.service.initObserver(this.section.nativeElement, 'header, li', options);
+    public constructor(service: IntersectionObserverService) {
+        afterRender(() => {
+            const options: IntersectionObserverInit = {rootMargin: '-120px 0px'};
+            service.initObserver(this.section.nativeElement, 'header, li', options);
+        });
     }
 }

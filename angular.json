@@ -20,7 +20,7 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
-                        "outputPath": "dist/code-star",
+                        "outputPath": "dist/code-star/browser",
                         "index": "src/index.html",
                         "main": "src/main.ts",
                         "polyfills": "src/polyfills.ts",
@@ -70,10 +70,10 @@
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "configurations": {
                         "production": {
-                            "browserTarget": "code-star:build:production"
+                            "buildTarget": "code-star:build:production"
                         },
                         "development": {
-                            "browserTarget": "code-star:build:development"
+                            "buildTarget": "code-star:build:development"
                         }
                     },
                     "defaultConfiguration": "development"
@@ -117,12 +117,73 @@
                     "options": {
                         "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
                     }
+                },
+                "server": {
+                  "builder": "@angular-devkit/build-angular:server",
+                  "options": {
+                    "outputPath": "dist/code-star/server",
+                    "main": "server.ts",
+                    "tsConfig": "tsconfig.server.json",
+                    "inlineStyleLanguage": "scss"
+                  },
+                  "configurations": {
+                    "production": {
+                      "outputHashing": "media",
+                      "fileReplacements": [
+                        {
+                          "replace": "src/environments/environment.ts",
+                          "with": "src/environments/environment.prod.ts"
+                        }
+                      ]
+                    },
+                    "development": {
+                      "buildOptimizer": false,
+                      "optimization": false,
+                      "sourceMap": true,
+                      "extractLicenses": false,
+                      "vendorChunk": true
+                    }
+                  },
+                  "defaultConfiguration": "production"
+                },
+                "serve-ssr": {
+                  "builder": "@angular-devkit/build-angular:ssr-dev-server",
+                  "configurations": {
+                    "development": {
+                      "browserTarget": "code-star:build:development",
+                      "serverTarget": "code-star:server:development"
+                    },
+                    "production": {
+                      "browserTarget": "code-star:build:production",
+                      "serverTarget": "code-star:server:production"
+                    }
+                  },
+                  "defaultConfiguration": "development"
+                },
+                "prerender": {
+                  "builder": "@angular-devkit/build-angular:prerender",
+                  "options": {
+                    "routes": [
+                      "/"
+                    ]
+                  },
+                  "configurations": {
+                    "production": {
+                      "browserTarget": "code-star:build:production",
+                      "serverTarget": "code-star:server:production"
+                    },
+                    "development": {
+                      "browserTarget": "code-star:build:development",
+                      "serverTarget": "code-star:server:development"
+                    }
+                  },
+                  "defaultConfiguration": "production"
                 }
             }
         }
     },
-    "defaultProject": "code-star",
     "cli": {
-        "defaultCollection": "@angular-eslint/schematics"
+        "defaultCollection": "@angular-eslint/schematics",
+        "analytics": false
     }
 }

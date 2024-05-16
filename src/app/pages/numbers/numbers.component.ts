@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, ElementRef, ViewChild, afterRender} from '@angular/core';
 import {IntersectionObserverService} from '../../services/intersection-observer.service';
 
 @Component({
@@ -6,13 +6,13 @@ import {IntersectionObserverService} from '../../services/intersection-observer.
     templateUrl: './numbers.component.html',
     styleUrls: ['./numbers.component.scss'],
 })
-export class NumbersComponent implements AfterViewInit {
+export class NumbersComponent {
     @ViewChild('section') private section!: ElementRef<HTMLElement>;
 
-    public constructor(private service: IntersectionObserverService) {}
-
-    public ngAfterViewInit(): void {
-        const options: IntersectionObserverInit = {rootMargin: '-120px 0px'};
-        this.service.initObserver(this.section.nativeElement, 'header, li', options);
+    public constructor(service: IntersectionObserverService) {
+        afterRender(() => {
+            const options: IntersectionObserverInit = {rootMargin: '-120px 0px'};
+            service.initObserver(this.section.nativeElement, 'header, li', options);
+        })
     }
 }
